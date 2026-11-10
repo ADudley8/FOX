@@ -225,7 +225,7 @@ def _simulate_one_spectrum(
 
     metadata = {
         "dates": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "file_names": f"FOX_simulation_{datetime.now().strftime("%Y-%m-%d")}_{i:05d}",
+        "file_names": f"FOX_simulation_{datetime.now().strftime('%Y-%m-%d')}_{i:05d}",
         "invalid_files": None,
         "b_vals": None,
         "q_factors": None,
@@ -244,7 +244,7 @@ def simulate_spectra(
     tune_step_bins: int = 60,
     noise_sigma: float = 1.0,
     rng_seed: int | None = 1234,
-    injected_axion: dict | None = None,
+    injected_axion: Optional[dict] | None = None,
     baseline_amp: float = 0.05,
     baseline_corr_bins: int = 400,
     baseline_key: Optional[int] = None,
@@ -299,14 +299,14 @@ def simulate_spectra(
     f_range = np.max(freqs_per_spec) - np.min(freqs_per_spec)
 
     axion = None
-    if injected_axion["enabled"]:
+    if injected_axion is not None:
         total_bins = n_bins + n_spectra - 1 * tune_step_bins
-        f_ax = injected_axion["f_axion_hz"]
+        f_ax = injected_axion.f_axion_hz
         if f_ax is None:
             f_ax = f_start_hz + 0.5 * total_bins * bin_width_hz
         s_ax = width_from_fq(f_ax)
         axion = AxionParams(f_axion_hz=float(f_ax), sigma_hz=s_ax,
-                            total_power=injected_axion["total_power"])
+                            total_power=injected_axion.total_power)
 
     # Optional axion power on the global RF grid
     axion_power_global = (
