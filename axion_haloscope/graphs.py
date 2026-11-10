@@ -684,7 +684,7 @@ def plot_data_cleaning(freq, spec,metadata, baseline, threshold, residuals, spec
 
     ax2.plot(freq[unmasked]/1e6, residuals[unmasked], lw=1.0, alpha=0.75, color=color, label="Masked Residuals")
     ax2.plot(freq/1e6, residuals, lw=1.0, alpha=0.35, color=color, label="Unmasked Residuals")
-    ax2.axhline(threshold, alpha=0.35, color="red", linestyle="dashed",label=f"{base["sigma_cut"]}σ Threshold")
+    ax2.axhline(threshold, alpha=0.35, color="red", linestyle="dashed",label=f"{base['sigma_cut']}σ Threshold")
     ax2.axhline(-threshold, alpha=0.35, color="red", linestyle="dashed")
     max_vals = [np.max(spec[masked_this_iteration])] if masked_this_iteration.any() else []
     if masked_previously.any():
